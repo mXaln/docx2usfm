@@ -2,7 +2,7 @@
 Converts bible docx files or txt files to usfm
 
 ## Requirements
-Python  
+Python 3 (Latest)  
 python-docx
 
 ## Install
