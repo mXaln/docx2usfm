@@ -95,17 +95,16 @@ for f in os.listdir("."):
 
                 # Convert arabic numbers if there any
                 p_line = convert_numbers(line)
+                m = reg.search(p_line)
 
-                if 0 < len(line) <= 3:
-                    # chapter marker
-                    m = reg.search(p_line)
-                    if m is not None:
+                if m is not None:
+                    if len(line) <= 3:
+                        # chapter marker
                         usfm.write('\\s5\n')
                         usfm.write('\\c ' + m.group() + '\n\n')
                         is_first_paragraph = True
-                else:
-                    # verse markers
-                    if reg.search(p_line) is not None:
+                    else:
+                        # verse markers
                         v_line = reg.sub(r'\n\\v \1 ', p_line)
                         if not is_first_paragraph:
                             usfm.write('\\s5\n')
