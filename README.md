@@ -1,5 +1,5 @@
 # docx2usfm
-Converts bible docx files or txt files to usfm
+Converts bible docx/txt files to usfm
 
 ## Requirements
 Python 3 (Latest)  
