@@ -9,7 +9,7 @@ python-docx
 pip install python-docx
 
 ## How to use
-Put .docx and/or .txt files to the same location as this script  
+Put .docx/.txt files to the same location as this script  
 Run the following command in this directory  
 ```python docx2usfm.py```
 
