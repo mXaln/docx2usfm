@@ -62,7 +62,7 @@ def convert_numbers(txt):
 
 
 for f in os.listdir("."):
-    if not f.endswith(".docx") or not f.endswith(".txt"):
+    if not f.endswith(".docx") and not f.endswith(".txt"):
         continue
 
     is_docx = f.endswith(".docx")
@@ -82,6 +82,8 @@ for f in os.listdir("."):
             usfm.write('\\toc3 Book_Code \n')
             usfm.write('\\mt Book_Name \n\n')
 
+            is_first_paragraph = False
+
             for line in lines:
                 if is_docx:
                     line = line.text
@@ -94,19 +96,18 @@ for f in os.listdir("."):
                 # Convert arabic numbers if there any
                 p_line = convert_numbers(line)
 
-                is_first_paragraph = False
-
                 if 0 < len(line) <= 3:
                     # chapter marker
                     m = reg.search(p_line)
-                    usfm.write('\\s5\n')
-                    usfm.write('\\c ' + m.group() + '\n\n')
-                    is_first_paragraph = True
+                    if m is not None:
+                        usfm.write('\\s5\n')
+                        usfm.write('\\c ' + m.group() + '\n\n')
+                        is_first_paragraph = True
                 else:
                     # verse markers
                     if reg.search(p_line) is not None:
                         v_line = reg.sub(r'\n\\v \1 ', p_line)
-                        if is_first_paragraph:
+                        if not is_first_paragraph:
                             usfm.write('\\s5\n')
                         usfm.write('\\p')
                         usfm.write(v_line + '\n\n')
